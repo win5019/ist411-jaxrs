@@ -8,9 +8,9 @@ package edu.psu.ist411.jaxrs.domain;
 
 import edu.psu.ist411.jaxrs.data.User;
 import edu.psu.ist411.jaxrs.data.UserRepository;
-import java.awt.print.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**

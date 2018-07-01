@@ -7,7 +7,7 @@
 package edu.psu.ist411.jaxrs.domain;
 
 import edu.psu.ist411.jaxrs.data.User;
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 
 /**
