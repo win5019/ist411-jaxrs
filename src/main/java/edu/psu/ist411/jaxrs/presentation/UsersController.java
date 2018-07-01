@@ -11,13 +11,18 @@ import edu.psu.ist411.jaxrs.domain.UserService;
 import edu.psu.ist411.jaxrs.presentation.UserModels.UserView;
 import edu.psu.ist411.jaxrs.presentation.UserModels.UserCreateRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,6 +42,16 @@ public class UsersController {
     @Autowired
     public UsersController(final UserService userService) {
         this.userService = userService;
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUsers(@DefaultValue("0") @QueryParam("page") int page, 
+                             @DefaultValue("15") @QueryParam("results") int results) {
+        final Page<UserView> modelPage = userService
+                .getUsers(PageRequest.of(page, results))
+                .map(UserView::new);
+        return Response.status(200).entity(modelPage).build();
     }
     
     @POST
