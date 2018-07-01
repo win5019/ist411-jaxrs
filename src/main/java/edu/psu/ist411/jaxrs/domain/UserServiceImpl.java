@@ -11,6 +11,7 @@ import edu.psu.ist411.jaxrs.data.UserRepository;
 import java.awt.print.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
 /**
  * Default implementation of {@link UserService}.
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Page;
  * @author Steven Weber
  * @author Win Ton
  */
+@Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     
