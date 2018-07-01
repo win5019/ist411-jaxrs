@@ -39,4 +39,13 @@ public interface UserService {
      * @return {@link User}
      */
     User getUser(String email);
+    
+    /**
+     * Creates and saves a new user.
+     * @param email Email of user
+     * @param first First name of user
+     * @param last Last name of user
+     * @return {@link User}
+     */
+    User createUser(String email, String first, String last);
 }

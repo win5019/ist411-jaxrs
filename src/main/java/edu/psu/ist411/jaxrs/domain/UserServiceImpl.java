@@ -45,4 +45,17 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email)
                 .orElseThrow(NoSuchUserException::new);
     }
+
+    @Override
+    public User createUser(final String email, 
+            final String first, final String last) {
+        // Create the business model
+        final User user = new User();
+        user.setEmail(email);
+        user.setFirstName(first);
+        user.setLastName(last);
+        
+        // Save the business model
+        return userRepository.save(user);
+    }
 }
