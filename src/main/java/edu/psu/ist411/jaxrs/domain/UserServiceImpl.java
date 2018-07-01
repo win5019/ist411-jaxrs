@@ -49,6 +49,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(final String email, 
             final String first, final String last) {
+        if (userRepository.existsByEmail(email)) {
+            throw new InvalidEmailException(email);
+        }
+        
         // Create the business model
         final User user = new User();
         user.setEmail(email);

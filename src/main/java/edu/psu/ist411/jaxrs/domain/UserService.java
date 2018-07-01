@@ -46,6 +46,8 @@ public interface UserService {
      * @param first First name of user
      * @param last Last name of user
      * @return {@link User}
+     * 
+     * @throws InvalidEmailException if user with email already exists
      */
     User createUser(String email, String first, String last);
 }
