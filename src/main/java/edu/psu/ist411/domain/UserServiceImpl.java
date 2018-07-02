@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package edu.psu.ist411.jaxrs.domain;
+package edu.psu.ist411.domain;
 
-import edu.psu.ist411.jaxrs.data.User;
-import edu.psu.ist411.jaxrs.data.UserRepository;
+import edu.psu.ist411.data.User;
+import edu.psu.ist411.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -82,12 +82,15 @@ public class UserServiceImpl implements UserService {
         final String first,
         final String last
     ) {
-        if (userRepository.existsByEmail(email)) {
+        // Get the existing user.
+        final User user = getUser(userId);
+
+        // Check if the new email already exists.
+        if (!user.getEmail().equalsIgnoreCase(email) && userRepository.existsByEmail(email)) {
             throw new InvalidEmailException(email);
         }
 
-        // Update the business model
-        final User user = getUser(userId);
+        // Update the business model.
         user.setEmail(email);
         user.setFirstName(first);
         user.setLastName(last);

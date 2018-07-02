@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package edu.psu.ist411.jaxrs.domain;
+package edu.psu.ist411.domain;
 
-import edu.psu.ist411.jaxrs.data.User;
+import edu.psu.ist411.data.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 
@@ -31,44 +31,45 @@ import org.springframework.data.domain.Page;
 public interface UserService {
     /**
      * Paginates all available users.
-     * @param pageable {@link Pageable}
-     * @return Page of {@link User}
+     * @param pageable {@link Pageable}.
+     * @return Page of {@link User}.
      */
     Page<User> getUsers(Pageable pageable);
 
     /**
      * Gets a user using their unique identifier.
-     * @param userId Unique id of user
-     * @return {@link User}
+     * @param userId Unique id of user.
+     * @return {@link User}.
      */
     User getUser(long userId);
 
     /**
      * Gets a user using their unique email address.
-     * @param email Unique email of user
-     * @return {@link User}
+     * @param email Unique email of user.
+     * @return {@link User}.
      */
     User getUser(String email);
 
     /**
      * Creates and saves a new user.
-     * @param email Email of user
-     * @param first First name of user
-     * @param last Last name of user
-     * @return {@link User}
+     * @param email Email of user.
+     * @param first First name of user.
+     * @param last Last name of user.
+     * @return {@link User}.
      *
-     * @throws InvalidEmailException if user with email already exists
+     * @throws InvalidEmailException if user with email already exists.
      */
     User createUser(String email, String first, String last);
 
     /**
      * Updates an existing user.
-     * @param email Email of user
-     * @param first First name of user
-     * @param last Last name of user
-     * @return {@link User}
+     * @param userId Unique ID of user.
+     * @param email Email of user.
+     * @param first First name of user.
+     * @param last Last name of user.
+     * @return {@link User}.
      *
-     * @throws InvalidEmailException if user with email already exists
+     * @throws InvalidEmailException if user with email already exists.
      */
     User updateUser(long userId, String email, String first, String last);
 }

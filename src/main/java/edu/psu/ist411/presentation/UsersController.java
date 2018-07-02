@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package edu.psu.ist411.jaxrs.presentation;
+package edu.psu.ist411.presentation;
 
-import edu.psu.ist411.jaxrs.data.User;
-import edu.psu.ist411.jaxrs.domain.UserService;
-import edu.psu.ist411.jaxrs.presentation.UserModels.UserView;
-import edu.psu.ist411.jaxrs.presentation.UserModels.UserCreateRequest;
+import edu.psu.ist411.data.User;
+import edu.psu.ist411.domain.UserService;
+import edu.psu.ist411.presentation.UserModels.UserView;
+import edu.psu.ist411.presentation.UserModels.UserCreateRequest;
+
+import javax.annotation.PostConstruct;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -54,8 +56,15 @@ public class UsersController {
         this.userService = userService;
     }
 
+    @PostConstruct
+    private void prefillUsers() {
+        final User userA = userService.createUser("a@a.com", "A", "A");
+        final User userB = userService.createUser("b@b.com", "B", "B");
+        final User userC = userService.createUser("c@c.com", "C", "C");
+    }
+
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
     public Response getUsers(@DefaultValue("0") @QueryParam("page") final int page,
                              @DefaultValue("15") @QueryParam("results") final int results) {
         final Page<UserView> modelPage = userService
@@ -65,15 +74,27 @@ public class UsersController {
     }
 
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createUser(final UserCreateRequest body) {
+        // Store and create the user.
+        final User user = userService.createUser(
+            body.getEmail(),
+            body.getFirstName(),
+            body.getLastName()
+        );
+
+        // Return the presentation-layer view as JSON.
+        return Response.status(200).entity(new UserView(user)).build();
+    }
+
+    @GET
     @Path("/{userId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createUser(@PathParam("userId") final long userId, final UserCreateRequest body) {
-        // Store and create the user.
-        final User user = userService.createUser(
-                body.getEmail(),
-                body.getFirstName(),
-                body.getLastName());
+    public Response getUser(@PathParam("userId") final long userId, final UserCreateRequest body) {
+        // Get the user.
+        final User user = userService.getUser(userId);
 
         // Return the presentation-layer view as JSON.
         return Response.status(200).entity(new UserView(user)).build();

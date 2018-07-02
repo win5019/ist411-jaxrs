@@ -14,25 +14,18 @@
  * limitations under the License.
  */
 
-package edu.psu.ist411.jaxrs.data;
-
-import java.util.Optional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+package edu.psu.ist411.domain;
 
 /**
- * Repository for entity model {@link User}.
- * 
+ * Thrown whenever an email is invalid.
+ *
  * @author Tyler Suehr
  * @author David Wong
  * @author Steven Weber
  * @author Win Ton
  */
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
-    Page<User> findAll(Pageable pageable);
-    Optional<User> findByEmail(String email);
-    boolean existsByEmail(String email);
+public class InvalidEmailException extends RuntimeException {
+    public InvalidEmailException(final String email) {
+        super("Email \"" + email + "\" already exists!");
+    }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package edu.psu.ist411.jaxrs.data;
+package edu.psu.ist411.data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

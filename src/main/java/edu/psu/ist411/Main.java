@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
-package edu.psu.ist411.jaxrs;
+package edu.psu.ist411;
 
-import edu.psu.ist411.jaxrs.presentation.UsersController;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Configuration for Jersey.
- * 
+ * Starting point of Spring Boot application.
+ *
  * @author Tyler Suehr
  * @author David Wong
  * @author Steven Weber
  * @author Win Ton
  */
-@Configuration
-public class JerseyConfig extends ResourceConfig {
-    public JerseyConfig() {
-        register(UsersController.class);
+@SpringBootApplication
+public class Main {
+    public static void main(final String[] args) {
+        SpringApplication.run(Main.class, args);
     }
 }

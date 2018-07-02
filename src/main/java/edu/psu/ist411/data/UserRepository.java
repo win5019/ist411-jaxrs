@@ -14,22 +14,25 @@
  * limitations under the License.
  */
 
-package edu.psu.ist411.jaxrs;
+package edu.psu.ist411.data;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
- * Starting point of Spring Boot application.
- * 
+ * Repository for entity model {@link User}.
+ *
  * @author Tyler Suehr
  * @author David Wong
  * @author Steven Weber
  * @author Win Ton
  */
-@SpringBootApplication
-public class Main {
-    public static void main(String[] args) {
-        SpringApplication.run(Main.class);
-    }
+@Repository
+public interface UserRepository extends CrudRepository<User, Long> {
+    Page<User> findAll(Pageable pageable);
+    Optional<User> findByEmail(String email);
+    boolean existsByEmail(String email);
 }

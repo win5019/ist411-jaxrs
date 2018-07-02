@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package edu.psu.ist411.jaxrs.domain;
+package edu.psu.ist411.domain;
 
 /**
- * Thrown whenever an email is invalid.
- * 
+ * Thrown whenever attempt to find a user that doesn't exist
+ *
  * @author Tyler Suehr
  * @author David Wong
  * @author Steven Weber
  * @author Win Ton
  */
-public class InvalidEmailException extends RuntimeException {
-    public InvalidEmailException(final String email) {
-        super("Email '" + email + "' already exists!");
+public class NoSuchUserException extends RuntimeException {
+    public NoSuchUserException() {
+        super("User doesn't exist!");
     }
 }

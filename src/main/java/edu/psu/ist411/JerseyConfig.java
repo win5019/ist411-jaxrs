@@ -14,18 +14,28 @@
  * limitations under the License.
  */
 
-package edu.psu.ist411.jaxrs.domain;
+package edu.psu.ist411;
+
+import edu.psu.ist411.presentation.UserPageViewMessageBodyWriter;
+import edu.psu.ist411.presentation.UsersController;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.servlet.ServletProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * Thrown whenever attempt to find a user that doesn't exist
- * 
+ * Configuration for Jersey.
+ *
  * @author Tyler Suehr
  * @author David Wong
  * @author Steven Weber
  * @author Win Ton
  */
-public class NoSuchUserException extends RuntimeException {
-    public NoSuchUserException() {
-        super("User doesn't exist!");
+@Configuration
+public class JerseyConfig extends ResourceConfig {
+    public JerseyConfig() {
+        register(UsersController.class);
+        register(UserPageViewMessageBodyWriter.class);
+
+        property(ServletProperties.FILTER_FORWARD_ON_404, true);
     }
 }
