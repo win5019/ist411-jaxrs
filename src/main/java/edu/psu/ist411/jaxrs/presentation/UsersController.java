@@ -24,6 +24,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -37,7 +38,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Presentation-layer abstraction for users API.
- * 
+ *
  * @author Tyler Suehr
  * @author David Wong
  * @author Steven Weber
@@ -47,35 +48,51 @@ import org.springframework.stereotype.Component;
 @Path("/api/users")
 public class UsersController {
     private final UserService userService;
-    
-    
+
     @Autowired
     public UsersController(final UserService userService) {
         this.userService = userService;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsers(@DefaultValue("0") @QueryParam("page") int page, 
-                             @DefaultValue("15") @QueryParam("results") int results) {
+    public Response getUsers(@DefaultValue("0") @QueryParam("page") final int page,
+                             @DefaultValue("15") @QueryParam("results") final int results) {
         final Page<UserView> modelPage = userService
                 .getUsers(PageRequest.of(page, results))
                 .map(UserView::new);
         return Response.status(200).entity(modelPage).build();
     }
-    
+
     @POST
     @Path("/{userId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createUser(@PathParam("userId") long userId, UserCreateRequest body) {
-        // Store and create the user
+    public Response createUser(@PathParam("userId") final long userId, final UserCreateRequest body) {
+        // Store and create the user.
         final User user = userService.createUser(
-                body.getEmail(), 
-                body.getFirstName(), 
+                body.getEmail(),
+                body.getFirstName(),
                 body.getLastName());
-        
-        // Return the presentation-layer view as JSON
+
+        // Return the presentation-layer view as JSON.
+        return Response.status(200).entity(new UserView(user)).build();
+    }
+
+    @PUT
+    @Path("/{userId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateUser(@PathParam("userId") final long userId, final UserCreateRequest body) {
+        // Update the user.
+        final User user = userService.updateUser(
+            userId,
+            body.getEmail(),
+            body.getFirstName(),
+            body.getLastName()
+        );
+
+        // Return the presentation-layer view as JSON.
         return Response.status(200).entity(new UserView(user)).build();
     }
 }

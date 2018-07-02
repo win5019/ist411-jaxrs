@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Default implementation of {@link UserService}.
- * 
+ *
  * @author Tyler Suehr
  * @author David Wong
  * @author Steven Weber
@@ -34,13 +34,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    
-    
+
+
     @Autowired
     public UserServiceImpl(final UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    
+
     @Override
     public Page<User> getUsers(final Pageable pageable) {
         return userRepository.findAll(pageable);
@@ -59,19 +59,40 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(final String email, 
+    public User createUser(final String email,
             final String first, final String last) {
         if (userRepository.existsByEmail(email)) {
             throw new InvalidEmailException(email);
         }
-        
-        // Create the business model
+
+        // Create the business model.
         final User user = new User();
         user.setEmail(email);
         user.setFirstName(first);
         user.setLastName(last);
-        
-        // Save the business model
+
+        // Save the business model.
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updateUser(
+        final long userId,
+        final String email,
+        final String first,
+        final String last
+    ) {
+        if (userRepository.existsByEmail(email)) {
+            throw new InvalidEmailException(email);
+        }
+
+        // Update the business model
+        final User user = getUser(userId);
+        user.setEmail(email);
+        user.setFirstName(first);
+        user.setLastName(last);
+
+        // Save the business model.
         return userRepository.save(user);
     }
 }

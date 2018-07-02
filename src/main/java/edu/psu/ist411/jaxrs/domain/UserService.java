@@ -22,7 +22,7 @@ import org.springframework.data.domain.Page;
 
 /**
  * Business-layer abstraction for users.
- * 
+ *
  * @author Tyler Suehr
  * @author David Wong
  * @author Steven Weber
@@ -35,29 +35,40 @@ public interface UserService {
      * @return Page of {@link User}
      */
     Page<User> getUsers(Pageable pageable);
-    
+
     /**
      * Gets a user using their unique identifier.
      * @param userId Unique id of user
      * @return {@link User}
      */
     User getUser(long userId);
-    
+
     /**
      * Gets a user using their unique email address.
      * @param email Unique email of user
      * @return {@link User}
      */
     User getUser(String email);
-    
+
     /**
      * Creates and saves a new user.
      * @param email Email of user
      * @param first First name of user
      * @param last Last name of user
      * @return {@link User}
-     * 
+     *
      * @throws InvalidEmailException if user with email already exists
      */
     User createUser(String email, String first, String last);
+
+    /**
+     * Updates an existing user.
+     * @param email Email of user
+     * @param first First name of user
+     * @param last Last name of user
+     * @return {@link User}
+     *
+     * @throws InvalidEmailException if user with email already exists
+     */
+    User updateUser(long userId, String email, String first, String last);
 }
