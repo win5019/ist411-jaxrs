@@ -16,7 +16,7 @@
 
 package edu.psu.ist411;
 
-import edu.psu.ist411.presentation.UserPageViewMessageBodyWriter;
+import edu.psu.ist411.presentation.UserViewPageMessageBodyWriter;
 import edu.psu.ist411.presentation.UsersController;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletProperties;
@@ -34,7 +34,7 @@ import org.springframework.context.annotation.Configuration;
 public class JerseyConfig extends ResourceConfig {
     public JerseyConfig() {
         register(UsersController.class);
-        register(UserPageViewMessageBodyWriter.class);
+        register(UserViewPageMessageBodyWriter.class);
 
         property(ServletProperties.FILTER_FORWARD_ON_404, true);
     }

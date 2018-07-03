@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 
 @Provider
 @Produces(MediaType.TEXT_HTML)
-public class UserPageViewMessageBodyWriter implements MessageBodyWriter<Page<UserView>> {
+public class UserViewPageMessageBodyWriter implements MessageBodyWriter<Page<UserView>> {
     @Override
     public boolean isWriteable(
         final Class<?> type,
