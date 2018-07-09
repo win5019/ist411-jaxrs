@@ -20,7 +20,9 @@ import edu.psu.ist411.jaxrs.data.User;
 import edu.psu.ist411.jaxrs.domain.UserService;
 import edu.psu.ist411.jaxrs.presentation.UserModels.UserView;
 import edu.psu.ist411.jaxrs.presentation.UserModels.UserCreateRequest;
+import edu.psu.ist411.jaxrs.presentation.UserModels.UserDeleteRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -94,5 +96,21 @@ public class UsersController {
 
         // Return the presentation-layer view as JSON.
         return Response.status(200).entity(new UserView(user)).build();
+    }
+    
+    @DELETE
+    @Path("/{userId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteUser(@PathParam("userId") final long userId, final UserDeleteRequest body) {
+        
+        // Get the user.
+        final User user = userService.getUser(userId);
+        
+        // Delete the user.
+        userService.deleteUser(userId);
+        
+        // Return the presentation-layer view as JSON.
+        return Response.status(200).entity(new UserDeleteRequest(user)).build();
     }
 }
