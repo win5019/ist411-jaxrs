@@ -98,4 +98,21 @@ public class UserServiceImpl implements UserService {
         // Save the business model.
         return userRepository.save(user);
     }
+    
+    @Override
+    public void deleteUser(
+        final long userId
+
+    ) {
+
+        // Check if the user exists.
+        if (userRepository.existsById(userId)) {
+            // Delete the user if the user exists.
+            userRepository.deleteById(userId);
+        } else {
+            // If the user does not exist then throw an exception.
+            throw new NoSuchUserException();
+        }
+
+    }
 }

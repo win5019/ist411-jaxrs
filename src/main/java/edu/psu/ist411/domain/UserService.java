@@ -72,4 +72,14 @@ public interface UserService {
      * @throws InvalidEmailException if user with email already exists.
      */
     User updateUser(long userId, String email, String first, String last);
+    
+    /**
+     * Deletes a user using their unique identifier.
+     * @param userId Unique id of user.
+     * @return {@link User}.
+     * 
+     * @throws NoSuchUserException if no user exists.
+     */
+    void deleteUser(long userId);
+
 }

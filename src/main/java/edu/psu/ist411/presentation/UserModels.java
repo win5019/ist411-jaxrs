@@ -100,4 +100,37 @@ public abstract class UserModels {
                 '}';
         }
     }
+    
+    /** Request body for user deletion. */
+    public static final class UserDeleteRequest {
+        private final long id;
+        private final String email;
+        private final String firstName;
+        private final String lastName;
+
+        public UserDeleteRequest(final User user) {
+            this.id = user.getId();
+            this.email = user.getEmail();
+            this.firstName = user.getFirstName();
+            this.lastName = user.getLastName();
+        }
+
+        public long getId() {
+            return id;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+    }
+    
 }
